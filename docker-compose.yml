@@ -1,14 +1,21 @@
+
 services:
   zone-new-checker:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env
+      args:
+        NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY}
     environment:
       NODE_ENV: production
-      PORT: 3000
+      PORT: "3000"
       HOSTNAME: 0.0.0.0
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY}
+      HUMAN_COOKIE_SECRET: ${HUMAN_COOKIE_SECRET}
+      TURNSTILE_ALLOWED_HOSTNAMES: ${TURNSTILE_ALLOWED_HOSTNAMES}
+      NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS: "0"
+      NEXT_PUBLIC_ENABLE_VERCEL_SPEED_INSIGHTS: "0"
+    expose:
+      - "3000"
     restart: unless-stopped
